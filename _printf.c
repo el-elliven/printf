@@ -3,7 +3,7 @@
 void print_buffer(char buffer[], int *buff_ind);
 
 /**
- * _printf - Printf function
+ * _printf - Printf functiona
  * @fmt: format.
  * Return: Printed chars.
  */
@@ -26,14 +26,14 @@ int _printf(const char *fmt, ...)
 			buffer[buff_ind++] = fmt[count];
 			if (buff_ind == BUFF_SIZE)
 				print_buffer(buffer, &buff_ind);
-			/* write(1, &fmt[i], 1);*/
+			/* write(1, &fmt[count], 1);*/
 			printed_chars++;
 		}
 		else
 		{
 			print_buffer(buffer, &buff_ind);
 			flags = get_flags(fmt, &count);
-			width = get_width(format, &count, list);
+			width = get_width(format, &count, arglist);
 			precision = get_precision(fmt, &count, arglist);
 			size = get_size(fmt, &count);
 			++i;
