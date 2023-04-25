@@ -1,43 +1,43 @@
 #include "main.h"
 
-void print_buffer(char buffer[], int *buff_ind);
+void print_buffer(char buffer[], int *buffer_count);
 
 /**
  * _printf - Printf function
- * @format: format
+ * @var_fmt: formart variable
  * Return: Printed chars.
  */
-int _printf(const char *format, ...)
+int _printf(const char *var_fmt, ...)
 {
 	int i, printed = 0, p_str = 0;
-	int flags, width, precision, size, buff_ind = 0;
+	int flags, width, precision, size, buffer_count = 0;
 	va_list list;
 	char buffer[BUFF_SIZE];
 
-	if (format == NULL)
+	if (var_fmt == NULL)
 		return (-1);
 
-	va_start(list, format);
+	va_start(list, var_fmt);
 
-	for (i = 0; format && format[i] != '\0'; i++)
+	for (i = 0; var_fmt && var_fmt[i] != '\0'; i++)
 	{
-		if (format[i] != '%')
+		if (var_fmt[i] != '%')
 		{
-			buffer[buff_ind++] = format[i];
-			if (buff_ind == BUFF_SIZE)
-				print_buffer(buffer, &buff_ind);
-			/* write(1, &format[i], 1);*/
+			buffer[buffer_count++] = var_fmt[i];
+			if (buffer_count == BUFF_SIZE)
+				print_buffer(buffer, &buffer_count);
+			/* write(1, &var_fmt[i], 1);*/
 			p_str++;
 		}
 		else
 		{
-			print_buffer(buffer, &buff_ind);
-			flags = get_flags(format, &i);
-			width = get_width(format, &i, list);
-			precision = get_precision(format, &i, list);
-			size = get_size(format, &i);
+			print_buffer(buffer, &buffer_count);
+			flags = flag_func(var_fmt, &i);
+			width = get_width(var_fmt, &i, list);
+			precision = get_precision(var_fmt, &i, list);
+			size = get_size(var_fmt, &i);
 			++i;
-			printed = handle_print(format, &i, list, buffer,
+			printed = handle_print(var_fmt, &i, list, buffer,
 				flags, width, precision, size);
 			if (printed == -1)
 				return (-1);
@@ -45,7 +45,7 @@ int _printf(const char *format, ...)
 		}
 	}
 
-	print_buffer(buffer, &buff_ind);
+	print_buffer(buffer, &buffer_count);
 
 	va_end(list);
 
@@ -55,12 +55,12 @@ int _printf(const char *format, ...)
 /**
  * print_buffer - Prints the contents of the buffer if it exist
  * @buffer: Array of chars
- * @buff_ind: Index at which to add next char, represents the length
+ * @buffer_count: Index at which to add next char, represents the length
  */
-void print_buffer(char buffer[], int *buff_ind)
+void print_buffer(char buffer[], int *buffer_count)
 {
-	if (*buff_ind > 0)
-		write(1, &buffer[0], *buff_ind);
+	if (*buffer_count > 0)
+		write(1, &buffer[0], *buffer_count);
 
-	*buff_ind = 0;
+	*buffer_count = 0;
 }

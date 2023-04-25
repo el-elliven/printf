@@ -21,7 +21,7 @@
 /**
  * struct fmt - Struct op
  *
- * @fmt: The format.
+ * @fmt: way in which data is structured or arranged.
  * @fn: The function associated.
  */
 struct fmt
@@ -34,7 +34,7 @@ struct fmt
 /**
  * typedef struct fmt fmt_t - Struct op
  *
- * @fmt: The format.
+ * @fmt: way in which data is structured or arranged.
  * @fm_t: The function associated.
  */
 typedef struct fmt fmt_t;
@@ -79,10 +79,10 @@ int print_pointer(va_list types, char buffer[],
 	int flags, int width, int precision, int size);
 
 /* Funciotns to handle other specifiers */
-int get_flags(const char *format, int *i);
-int get_width(const char *format, int *i, va_list list);
-int get_precision(const char *format, int *i, va_list list);
-int get_size(const char *format, int *i);
+int flag_func(const char *var_fmt, int *i);
+int get_width(const char *var_fmt, int *i, va_list list);
+int get_precision(const char *var_fmt, int *i, va_list list);
+int get_size(const char *var_fmt, int *i);
 
 /*Function to print string in reverse*/
 int print_reverse(va_list types, char buffer[],
