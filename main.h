@@ -1,5 +1,5 @@
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef HOL_H
+#define HOL_H
 #include <stdarg.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -15,14 +15,14 @@
 #define F_SPACE 16
 
 /* SIZES */
-#define LONG_SIZE 2
-#define SHORT_SIZE 1
+#define S_LONG 2
+#define S_SHORT 1
 
 /**
  * struct fmt - Struct op
  *
- * @fmt: way in which data is structured or arranged.
- * @fn: The function associated.
+ * @fmt: The format
+ * @fn: The function associated
  */
 struct fmt
 {
@@ -34,14 +34,14 @@ struct fmt
 /**
  * typedef struct fmt fmt_t - Struct op
  *
- * @fmt: way in which data is structured or arranged.
- * @fm_t: The function associated.
+ * @fmt: The format
+ * @fm_t: The function associated
  */
 typedef struct fmt fmt_t;
 
-int _printf(const char *fmt, ...);
+int _printf(const char *format, ...);
 int handle_print(const char *fmt, int *i,
-va_list arglist, char buffer[], int flags, int width, int precision, int size);
+va_list list, char buffer[], int flags, int width, int precision, int size);
 
 /****************** FUNCTIONS ******************/
 
@@ -64,7 +64,7 @@ int print_octal(va_list types, char buffer[],
 	int flags, int width, int precision, int size);
 int print_hexadecimal(va_list types, char buffer[],
 	int flags, int width, int precision, int size);
-int print_hexadecimal_upper(va_list types, char buffer[],
+int print_hexa_upper(va_list types, char buffer[],
 	int flags, int width, int precision, int size);
 
 int print_hexa(va_list types, char map_to[],
@@ -79,10 +79,10 @@ int print_pointer(va_list types, char buffer[],
 	int flags, int width, int precision, int size);
 
 /* Funciotns to handle other specifiers */
-int flag_func(const char *var_fmt, int *i);
-int get_width(const char *var_fmt, int *i, va_list list);
-int get_precision(const char *var_fmt, int *i, va_list list);
-int get_size(const char *var_fmt, int *i);
+int get_flags(const char *format, int *i);
+int get_width(const char *format, int *i, va_list list);
+int get_precision(const char *format, int *i, va_list list);
+int get_size(const char *format, int *i);
 
 /*Function to print string in reverse*/
 int print_reverse(va_list types, char buffer[],
@@ -95,14 +95,14 @@ int print_rot13string(va_list types, char buffer[],
 /* width handler */
 int handle_write_char(char c, char buffer[],
 	int flags, int width, int precision, int size);
-int write_num(int is_positive, int index, char buffer[],
+int write_number(int is_positive, int ind, char buffer[],
 	int flags, int width, int precision, int size);
-int write_num(int index, char bff[], int flags, int width, int precision,
-	int length, char padding, char xtra_c);
-int write_pointer(char buffer[], int index, int length,
-	int width, int flags, char padding, char xtra_c, int padding_st);
+int write_num(int ind, char bff[], int flags, int width, int precision,
+	int length, char padd, char extra_c);
+int write_pointer(char buffer[], int ind, int length,
+	int width, int flags, char padd, char extra_c, int padd_start);
 
-int write_unsigned(int is_negative, int index,
+int write_unsgnd(int is_negative, int ind,
 char buffer[],
 	int flags, int width, int precision, int size);
 
@@ -114,4 +114,4 @@ int is_digit(char);
 long int convert_size_number(long int num, int size);
 long int convert_size_unsgnd(unsigned long int num, int size);
 
-#endif
+#endif /* HOL_H */

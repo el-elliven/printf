@@ -2,25 +2,25 @@
 
 /**
  * get_size - Calculates the size to cast the argument
- * @var_fmt: Formatted string in which to print the arguments
- * @i: List of arguments to be printed.
+ * @format: Formatted string in which to print the arguments
+ * @i: List of arguments to be printed
  *
  * Return: Precision.
  */
-int get_size(const char *var_fmt, int *i)
+int get_size(const char *format, int *i)
 {
-	int k = *i + 1;
+	int curr_i = *i + 1;
 	int size = 0;
 
-	if (var_fmt[k] == 'l')
-		size = LONG_SIZE;
-	else if (var_fmt[k] == 'h')
-		size = SHORT_SIZE;
+	if (format[curr_i] == 'l')
+		size = S_LONG;
+	else if (format[curr_i] == 'h')
+		size = S_SHORT;
 
 	if (size == 0)
-		*i = k - 1;
+		*i = curr_i - 1;
 	else
-		*i = k;
+		*i = curr_i;
 
 	return (size);
 }
