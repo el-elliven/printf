@@ -1,4 +1,4 @@
-#include "holberton.h"
+#include "main.h"
 
 int is_lowercase(char);
 char *string_to_upper(char *);
