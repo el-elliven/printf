@@ -1,66 +1,30 @@
-#include "main.h"
-
-void print_buffer(char buffer[], int *buff_ind);
+#include "holberton.h"
 
 /**
- * _printf - Printf function
- * @format: format.
- * Return: Printed chars.
- */
+ * _printf - Produces output according to a format
+ * @format: Is a character string. The format string
+ * is composed of zero or more directives
+ *
+ * Return: The number of characters printed (excluding
+ * the null byte used to end output to strings)
+ **/
 int _printf(const char *format, ...)
 {
-	int k, printed = 0, printed_chars = 0;
-	int flags, width, precision, size, buff_ind = 0;
-	va_list list;
-	char buffer[BUFF_SIZE];
+	int size;
+	va_list args;
 
 	if (format == NULL)
 		return (-1);
 
-	va_start(list, format);
+	size = _strlen(format);
+	if (size <= 0)
+		return (0);
 
-	for (k = 0; format && format[k] != '\0'; k++)
-	{
-		if (format[k] != '%')
-		{
-			buffer[buff_ind++] = format[k];
-			if (buff_ind == BUFF_SIZE)
-				print_buffer(buffer, &buff_ind);
-			/* write(1, &format[k], 1);*/
-			printed_chars++;
-		}
-		else
-		{
-			print_buffer(buffer, &buff_ind);
-			flags = get_the_flags(format, &k);
-			width = get_the_width(format, &k, list);
-			precision = get_the_precision(format, &k, list);
-			size = get_the_size(format, &k);
-			++k;
-			printed = handling_print(format, &k, list, buffer,
-				flags, width, precision, size);
-			if (printed == -1)
-				return (-1);
-			printed_chars += printed;
-		}
-	}
+	va_start(args, format);
+	size = handler(format, args);
 
-	print_buffer(buffer, &buff_ind);
+	_putchar(-1);
+	va_end(args);
 
-	va_end(list);
-
-	return (printed_chars);
-}
-
-/**
- * print_buffer - Prints the contents of the buffer if it exists
- * @buffer: Array of chars
- * @buff_ind: Index at which to add next char, represents the length.
- */
-void print_buffer(char buffer[], int *buff_ind)
-{
-	if (*buff_ind > 0)
-		write(1, &buffer[0], *buff_ind);
-
-	*buff_ind = 0;
+	return (size);
 }
