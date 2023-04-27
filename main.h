@@ -100,7 +100,7 @@ int write_number(int is_positive, int ind, char buffer[],
 int write_num(int ind, char bff[], int flags, int width, int precision,
 	int length, char padd, char extra_c);
 int write_pointer(char buffer[], int ind, int length,
-	int width, int flags, char padd, char extra_c, int padd_start);
+	int width, int flags, char padd, char extra_c, int start_padding);
 
 int write_unsgnd(int is_negative, int ind,
 char buffer[],
