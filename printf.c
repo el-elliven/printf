@@ -9,15 +9,15 @@ void print_buffer(char buffer[], int *buff_ind);
  */
 int _printf(const char *format, ...)
 {
-	int i, printed = 0, printed_chars = 0;
+	int i, x_print = 0, y_print = 0;
 	int flags, width, precision, size, buff_ind = 0;
-	va_list list;
+	va_list arglist;
 	char buffer[BUFF_SIZE];
 
 	if (format == NULL)
 		return (-1);
 
-	va_start(list, format);
+	va_start(arglist, format);
 
 	for (i = 0; format && format[i] != '\0'; i++)
 	{
@@ -27,29 +27,29 @@ int _printf(const char *format, ...)
 			if (buff_ind == BUFF_SIZE)
 				print_buffer(buffer, &buff_ind);
 			/* write(1, &format[i], 1);*/
-			printed_chars++;
+			y_print++;
 		}
 		else
 		{
 			print_buffer(buffer, &buff_ind);
 			flags = get_flags(format, &i);
-			width = get_width(format, &i, list);
-			precision = get_precision(format, &i, list);
+			width = get_width(format, &i, arglist);
+			precision = get_precision(format, &i, arglist);
 			size = get_size(format, &i);
 			++i;
-			printed = handle_print(format, &i, list, buffer,
+			x_print = handle_print(format, &i, arglist, buffer,
 				flags, width, precision, size);
-			if (printed == -1)
+			if (x_print == -1)
 				return (-1);
-			printed_chars += printed;
+			y_print += x_print;
 		}
 	}
 
 	print_buffer(buffer, &buff_ind);
 
-	va_end(list);
+	va_end(arglist);
 
-	return (printed_chars);
+	return (y_print);
 }
 
 /**
