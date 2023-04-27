@@ -1,16 +1,16 @@
 #include "main.h"
 
-void print_buffer(char buffer[], int *buff_ind);
+void print_buffer(char buffer[], int *buffer_index);
 
 /**
- * _printf - Printf function
+ * _printf - prints array of characters
  * @format: format.
- * Return: Printed chars.
+ * Return: characters
  */
 int _printf(const char *format, ...)
 {
 	int i, x_print = 0, y_print = 0;
-	int flags, width, precision, size, buff_ind = 0;
+	int flags, width, precision, size, buffer_index = 0;
 	va_list arglist;
 	char buffer[BUFF_SIZE];
 
@@ -23,15 +23,15 @@ int _printf(const char *format, ...)
 	{
 		if (format[i] != '%')
 		{
-			buffer[buff_ind++] = format[i];
-			if (buff_ind == BUFF_SIZE)
-				print_buffer(buffer, &buff_ind);
+			buffer[buffer_index++] = format[i];
+			if (buffer_index == BUFF_SIZE)
+				print_buffer(buffer, &buffer_index);
 			/* write(1, &format[i], 1);*/
 			y_print++;
 		}
 		else
 		{
-			print_buffer(buffer, &buff_ind);
+			print_buffer(buffer, &buffer_index);
 			flags = get_flags(format, &i);
 			width = get_width(format, &i, arglist);
 			precision = get_precision(format, &i, arglist);
@@ -45,7 +45,7 @@ int _printf(const char *format, ...)
 		}
 	}
 
-	print_buffer(buffer, &buff_ind);
+	print_buffer(buffer, &buffer_index);
 
 	va_end(arglist);
 
@@ -53,15 +53,14 @@ int _printf(const char *format, ...)
 }
 
 /**
- * print_buffer - Outputs contents of the buffer only if it exist
- * @buffer: Array of chars
- * @buff_ind: Index at which to add next char, represents the length.
+ * print_buffer - Prints the contents of the buffer if it exist
+ * @buffer: an array of characters
+ * @buffer_index: Index at which to add next char, represents the length.
  */
-void print_buffer(char buffer[], int *buff_ind)
+void print_buffer(char buffer[], int *buffer_index)
 {
-	if (*buff_ind > 0)
-		write(1, &buffer[0], *buff_ind);
+	if (*buffer_index > 0)
+		write(1, &buffer[0], *buffer_index);
 
-	*buff_ind = 0;
+	*buffer_index = 0;
 }
-
